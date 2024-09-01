@@ -1,0 +1,18 @@
+{
+    "manifest_version": 3,
+    "name": "YTM_Block",
+    "description": "Block things that stop youtube music from not playing",
+    "version": "1.0",
+    "action": {
+      "default_popup": "ytm.html",
+      "default_icon": "ytm_icon.png"
+    },
+    "content_scripts": [
+      {
+        "js": ["scripts/main.js"],
+        "matches": [
+          "https://music.youtube.com/*"
+        ]
+      }
+    ]
+  }
