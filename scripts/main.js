@@ -58,12 +58,20 @@ function sortAll(parent, sortList) {
     }
 }
 
-function playCountToNumber(listOfPlays) { // play count is displayed as ###k or ###M ect, convert to a real number
+function playCountToNumber(listOfPlays) { // play count is displayed as ##.#k or ##.#M ect, convert to a real number
     for(let i = 0; i < listOfPlays.length; i++) {
-        listOfPlays[i] = listOfPlays[i].replace("K","000");
-        listOfPlays[i] = listOfPlays[i].replace("M","000000");
-        listOfPlays[i] = listOfPlays[i].replace("B","000000000");
-        listOfPlays[i] = Number(listOfPlays[i]);
+
+        const replacables = ['K','M','B'];
+        var extension = listOfPlays[i].slice(-1); // does this number have an extension k m b
+        var newNum = Number(listOfPlays[i].slice(0, -1));
+        for (var j = 0; j < replacables.length; j++) { // if there is an extension find which one
+            if (extension == replacables[j]) {
+                for (var k = 1; k <= j+1; k++) { // depending on where it is in the list, multiply the current number
+                    newNum *= 1000;
+                }
+            }
+        }
+        listOfPlays[i] = newNum;
     }
 }
 
