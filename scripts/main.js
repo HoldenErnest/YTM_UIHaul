@@ -1,6 +1,9 @@
 // Holden Ernest - 9/1/2024
 // Fix IU for ytm page
 
+UpdatePlaylistPage(); // This only activates on pages with /playlist because of the manifest.json
+
+
 function UpdatePlaylistPage() {
     setTimeout(function () {
         var randomContentElements = document.getElementsByClassName("style-scope ytmusic-playlist-shelf-renderer"); // cant use id "contents" because youtube doesnt use id's traditionally
@@ -69,6 +72,8 @@ function log(thing) {
     console.log("[YTM UIHaul] " + thing)
 }
 
+/*
+
 window.navigation.addEventListener("navigate", newURLEvent);
 //window.navigation.removeEventListener("navigate", newURLEvent); // << to remove this (if you ever want)
 
@@ -81,3 +86,5 @@ function newURLEvent(event) {
         UpdatePlaylistPage();
     }
 };
+
+*/
