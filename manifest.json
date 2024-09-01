@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "YTM_Block",
-    "description": "Block things that stop youtube music from not playing",
+    "name": "YTM_UIHaul",
+    "description": "Overhaul the UI for youtube music",
     "version": "1.0",
     "action": {
       "default_popup": "ytm.html",
