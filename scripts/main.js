@@ -1,10 +1,11 @@
 // Holden Ernest - 9/1/2024
 // Fix IU for ytm page
 
-UpdatePlaylistPage(); // This only activates on pages with /playlist because of the manifest.json
+UpdatePlaylistPage(); // I wish this executed everytime you got to a page with /playlist because of the manifest.json, but it might only activate once when you first load a playlist
 
 
 function UpdatePlaylistPage() {
+    log("attempting to sort playlist..");
     setTimeout(function () {
         var randomContentElements = document.getElementsByClassName("style-scope ytmusic-playlist-shelf-renderer"); // cant use id "contents" because youtube doesnt use id's traditionally
         var allSongs; // this is the parent for all of the song elements
@@ -20,22 +21,18 @@ function UpdatePlaylistPage() {
         var allSongNames = [];
         var allSongPlays = [];
 
-        log("songs: " + allSongs.children.length);
+        log("total songs: " + allSongs.children.length);
         for (let i = 0; i < allSongs.children.length; i++) {
             let song = allSongs.children[i];
             allSongNames.push(song.children[4].children[0].children[0].children[0].innerHTML);
             allSongPlays.push(song.children[4].children[2].children[1].innerHTML.replace(" plays", ""));
         }
 
-        for (let i = 0; i < allSongNames.length; i++) {
-            log(allSongNames[i] + " : " + allSongPlays[i]);
-        }
-
         //allSongs.insertBefore(allSongs.children[1], allSongs.children[0]);
         playCountToNumber(allSongPlays);
         sortAll(allSongs, allSongPlays);
         // create a new element at the top, right before contents. Then create a click event for sorting everything in contents based on what the user wants
-        
+        log("done sorting..");
     },1000); // a little delay to make sure its loaded
 }
 
@@ -80,8 +77,6 @@ function log(thing) {
     console.log("[YTM UIHaul] " + thing)
 }
 
-/*
-
 window.navigation.addEventListener("navigate", newURLEvent);
 //window.navigation.removeEventListener("navigate", newURLEvent); // << to remove this (if you ever want)
 
@@ -94,5 +89,3 @@ function newURLEvent(event) {
         UpdatePlaylistPage();
     }
 };
-
-*/
