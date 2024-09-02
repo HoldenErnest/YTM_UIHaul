@@ -11,7 +11,7 @@
       {
         "js": ["scripts/main.js"],
         "matches": [
-          "https://music.youtube.com/playlist*"
+          "https://music.youtube.com/*"
         ]
       }
     ]

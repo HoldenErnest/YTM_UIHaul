@@ -1,39 +1,46 @@
 // Holden Ernest - 9/1/2024
 // Fix IU for ytm page
 
-UpdatePlaylistPage(); // I wish this executed everytime you got to a page with /playlist because of the manifest.json, but it might only activate once when you first load a playlist
+
+// I wish this executed everytime you got to a page with /playlist because of the manifest.json, but it might only activate once when you first load a playlist so instead we need the url change event
+// attempt to sort (if this is a playlist page)
+UpdatePlaylistPage();
 
 
 function UpdatePlaylistPage() {
     log("attempting to sort playlist..");
-    setTimeout(function () {
-        var randomContentElements = document.getElementsByClassName("style-scope ytmusic-playlist-shelf-renderer"); // cant use id "contents" because youtube doesnt use id's traditionally
-        var allSongs; // this is the parent for all of the song elements
+    try {
+        setTimeout(function () {
+            var randomContentElements = document.getElementsByClassName("style-scope ytmusic-playlist-shelf-renderer"); // cant use id "contents" because youtube doesnt use id's traditionally
+            var allSongs; // this is the parent for all of the song elements
 
-        for (let i = 0; i < randomContentElements.length; i++) {
-            let e = randomContentElements[i];
-            if (e.id == "contents") {
-                allSongs = e;
+            for (let i = 0; i < randomContentElements.length; i++) {
+                let e = randomContentElements[i];
+                if (e.id == "contents") {
+                    allSongs = e;
+                }
             }
-        }
-        // at this point allSongs should contain every song element in the playlist
+            // at this point allSongs should contain every song element in the playlist
 
-        var allSongNames = [];
-        var allSongPlays = [];
+            var allSongNames = [];
+            var allSongPlays = [];
 
-        log("total songs: " + allSongs.children.length);
-        for (let i = 0; i < allSongs.children.length; i++) {
-            let song = allSongs.children[i];
-            allSongNames.push(song.children[4].children[0].children[0].children[0].innerHTML);
-            allSongPlays.push(song.children[4].children[2].children[1].innerHTML.replace(" plays", ""));
-        }
+            log("total songs: " + allSongs.children.length);
+            for (let i = 0; i < allSongs.children.length; i++) {
+                let song = allSongs.children[i];
+                allSongNames.push(song.children[4].children[0].children[0].children[0].innerHTML);
+                allSongPlays.push(song.children[4].children[2].children[1].innerHTML.replace(" plays", ""));
+            }
 
-        //allSongs.insertBefore(allSongs.children[1], allSongs.children[0]);
-        playCountToNumber(allSongPlays);
-        sortAll(allSongs, allSongPlays);
-        // create a new element at the top, right before contents. Then create a click event for sorting everything in contents based on what the user wants
-        log("done sorting..");
-    },1000); // a little delay to make sure its loaded
+            //allSongs.insertBefore(allSongs.children[1], allSongs.children[0]);
+            playCountToNumber(allSongPlays);
+            sortAll(allSongs, allSongPlays);
+            // create a new element at the top, right before contents. Then create a click event for sorting everything in contents based on what the user wants
+            log("done sorting..");
+        },0); // a little delay to make sure its loaded
+    } catch (e) {
+        log(e);
+    }
 }
 
 function sortAll(parent, sortList) {
